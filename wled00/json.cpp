@@ -345,6 +345,8 @@ void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segme
     root[F("ps")] = currentPreset;
     root[F("pss")] = savedPresets;
     root[F("pl")] = (presetCyclingEnabled) ? 0: -1;
+
+    serializeConfig();
     
     usermods.addToJsonState(root);
 

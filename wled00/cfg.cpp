@@ -489,7 +489,12 @@ void serializeConfig() {
   light_nl[F("macro")] = macroNl;
 
   JsonObject def = doc.createNestedObject("def");
-  def[F("ps")] = bootPreset;
+  // This will allow the device to always start with the last preset that was selected.
+  if (currentPreset > 0) {
+    def[F("ps")] = currentPreset;
+  } else {
+    def[F("ps")] = bootPreset;
+  }
   def["on"] = turnOnAtBoot;
   def["bri"] = briS;
 
