@@ -155,6 +155,7 @@ void deserializeSegment(JsonObject elem, byte it)
 
 bool deserializeState(JsonObject root)
 {
+  //Reading State
   strip.applyToAllSelected = false;
   bool stateResponse = root[F("v")] | false;
   
@@ -257,6 +258,8 @@ bool deserializeState(JsonObject root)
 
   usermods.readFromJsonState(root);
 
+  //savePreset(1, true, nullptr, root);
+
   int ps = root[F("psave")] | -1;
   if (ps > 0) {
     savePreset(ps, true, nullptr, root);
@@ -333,6 +336,7 @@ void serializeSegment(JsonObject& root, WS2812FX::Segment& seg, byte id, bool fo
 
 void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segmentBounds)
 { 
+  // Writing State
   if (includeBri) {
     root["on"] = (bri > 0);
     root["bri"] = briLast;

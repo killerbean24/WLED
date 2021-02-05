@@ -722,46 +722,46 @@ function requestJson(command, rinfo = true, verbose = true) {
 		if (json.success) return;
 		var s = json;
 		if (!command || rinfo) {
-		if (!rinfo) {
-		pmt = json.info.fs.pmt;
-    if (pmt != pmtLS || pmt == 0) {
-      setTimeout(loadPresets,99);
-    }
-    else populatePresets(true);
-    pmtLast = pmt;
-		var x='',y='<option value="0">Default</option>';
-		json.effects.shift(); //remove solid
-		for (let i = 0; i < json.effects.length; i++) json.effects[i] = {id: parseInt(i)+1, name:json.effects[i]};
-		json.effects.sort(compare);
-		for (let i = 0; i < json.effects.length; i++) {
-		x += `<button class="btn${(i==0)?" first":""}" id="fxb${json.effects[i].id}" onclick="setX(${json.effects[i].id});">${json.effects[i].name}</button><br>`;
-		}
+			if (!rinfo) {
+				pmt = json.info.fs.pmt;
+				if (pmt != pmtLS || pmt == 0) {
+				setTimeout(loadPresets,99);
+				}
+				else populatePresets(true);
+				pmtLast = pmt;
+				var x='',y='<option value="0">Default</option>';
+				json.effects.shift(); //remove solid
+				for (let i = 0; i < json.effects.length; i++) json.effects[i] = {id: parseInt(i)+1, name:json.effects[i]};
+				json.effects.sort(compare);
+				for (let i = 0; i < json.effects.length; i++) {
+					x += `<button class="btn${(i==0)?" first":""}" id="fxb${json.effects[i].id}" onclick="setX(${json.effects[i].id});">${json.effects[i].name}</button><br>`;
+				}
 
-		json.palettes.shift(); //remove default
-		for (let i = 0; i < json.palettes.length; i++) json.palettes[i] = {"id": parseInt(i)+1, "name":json.palettes[i]};
-		json.palettes.sort(compare);
-		for (let i = 0; i < json.palettes.length; i++) {
-		y += `<option value="${json.palettes[i].id}">${json.palettes[i].name}</option>`;
-		}
-		e1.innerHTML=x; e2.innerHTML=y;
-		}
-		
+				json.palettes.shift(); //remove default
+				for (let i = 0; i < json.palettes.length; i++) json.palettes[i] = {"id": parseInt(i)+1, "name":json.palettes[i]};
+				json.palettes.sort(compare);
+				for (let i = 0; i < json.palettes.length; i++) {
+					y += `<option value="${json.palettes[i].id}">${json.palettes[i].name}</option>`;
+				}
+				e1.innerHTML=x; e2.innerHTML=y;
+			}
+			
 			var info = json.info;
 			var name = info.name;
 			d.getElementById('namelabel').innerHTML = name;
 			if (name === "Dinnerbone") d.documentElement.style.transform = "rotate(180deg)";
 			if (info.live) name = "(Live) " + name;
-		if (loc) name = "(L) " + name;
+			if (loc) name = "(L) " + name;
 			d.title = name;
 			isRgbw = info.leds.wv;
 			ledCount = info.leds.count;
 			syncTglRecv = info.str;
-      maxSeg = info.leds.maxseg;
-      pmt = info.fs.pmt;
-      if (!command && pmt != pmtLast) setTimeout(loadPresets,99);
-      pmtLast = pmt;
-		lastinfo = info;
-		if (isInfo) populateInfo(info);
+			maxSeg = info.leds.maxseg;
+			pmt = info.fs.pmt;
+			if (!command && pmt != pmtLast) setTimeout(loadPresets,99);
+			pmtLast = pmt;
+			lastinfo = info;
+			if (isInfo) populateInfo(info);
 			s = json.state;
 			displayRover(info, s);
 		}
@@ -781,8 +781,7 @@ function requestJson(command, rinfo = true, verbose = true) {
 		
 		var selc=0; var ind=0;
 		populateSegments(s);
-		for (let i = 0; i < (s.seg||[]).length; i++)
-		{
+		for (let i = 0; i < (s.seg||[]).length; i++) {
 			if(s.seg[i].sel) {selc = ind; break;} ind++;
 		}
 		var i=s.seg[selc];
@@ -792,8 +791,7 @@ function requestJson(command, rinfo = true, verbose = true) {
 			return;
 		}
 		var cd = d.getElementById('csl').children;
-		for (let e = 2; e >= 0; e--)
-		{
+		for (let e = 2; e >= 0; e--) {
 			cd[e].style.backgroundColor = "rgb(" + i.col[e][0] + "," + i.col[e][1] + "," + i.col[e][2] + ")";
 			if (isRgbw) whites[e] = parseInt(i.col[e][3]);
 			selectSlot(csel);
@@ -809,20 +807,20 @@ function requestJson(command, rinfo = true, verbose = true) {
 		if (!command) d.getElementById('Effects').scrollTop = d.getElementById('fxb' + selectedFx).offsetTop - d.getElementById('Effects').clientHeight/1.8;
 
 		if (s.error && s.error != 0) {
-      var errstr = "";
-      switch (s.error) {
-        case 10: errstr = "Could not mount filesystem!"; break;
-        case 11: errstr = "Not enough space to save preset!"; break;
-        case 12: errstr = "The requested preset does not exist."; break;
-        case 19: errstr = "A filesystem error has occured."; break;
-      }
-      showToast('Error ' + s.error + ": " + errstr, true);
-    }
+			var errstr = "";
+			switch (s.error) {
+				case 10: errstr = "Could not mount filesystem!"; break;
+				case 11: errstr = "Not enough space to save preset!"; break;
+				case 12: errstr = "The requested preset does not exist."; break;
+				case 19: errstr = "A filesystem error has occured."; break;
+			}
+			showToast('Error ' + s.error + ": " + errstr, true);
+		}
 		updateUI();
 	})
 	.catch(function (error) {
 		showToast(error, true);
-	  console.log(error);
+		console.log(error);
 	});
 }
 
@@ -1099,9 +1097,9 @@ function saveP(i) {
 				d.getElementById(`p${i}warn`).innerHTML = "&#9888; Syntax error in custom JSON API command";
 				return;
 			} else if (raw.indexOf("Please") == 0) {
-        d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please refresh the page before modifying this preset";
+        		d.getElementById(`p${i}warn`).innerHTML = "&#9888; Please refresh the page before modifying this preset";
 				return;
-      }
+      		}
 		}
 		obj.o = true;
 	} else {
@@ -1112,14 +1110,14 @@ function saveP(i) {
 	var pQN = d.getElementById(`p${i}ql`).value;
 	if (pQN.length > 0) obj.ql = pQN;
 
-  showToast("Saving " + pN +" (" + pI + ")");
+  	showToast("Saving " + pN + " (" + pI + ")");
 	requestJson(obj);
 	if (obj.o) {
 		pJson[pI] = obj;
-    delete pJson[pI].psave;
-    delete pJson[pI].o;
-    delete pJson[pI].v;
-    delete pJson[pI].time;
+		delete pJson[pI].psave;
+		delete pJson[pI].o;
+		delete pJson[pI].v;
+		delete pJson[pI].time;
 	} else {
 		pJson[pI] = {"n":pN, "win":"Please refresh the page to see this newly saved command."};
 		if (obj.win) pJson[pI].win = obj.win;
