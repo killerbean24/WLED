@@ -406,20 +406,19 @@ function populatePresets(fromls)
 	var arr = Object.entries(pJson);
 	arr.sort(cmpP);
 	var added = false;
-  pQL = [];
-  var is = [];
+	pQL = [];
+	var is = [];
 
-	for (var key of (arr||[]))
-	{
+	for (var key of (arr||[])) {
 		if (!isObject(key[1])) continue;
 		let i = parseInt(key[0]);
 		var qll = key[1].ql;
-    if (qll) pQL.push([i, qll]);
-    is.push(i);
+		if (qll) pQL.push([i, qll]);
+		is.push(i);
 		
-    cn += `<div class="seg pres" id="p${i}o">`;
-    if (cfg.comp.pid) cn += `<div class="pid">${i}</div>`;
-    cn += `<div class="segname pname" onclick="setPreset(${i})">${pName(i)}</div>
+		cn += `<div class="seg pres" id="p${i}o">`;
+		if (cfg.comp.pid) cn += `<div class="pid">${i}</div>`;
+		cn += `<div class="segname pname" onclick="setPreset(${i})">${pName(i)}</div>
 			<i class="icons e-icon flr ${expanded[i+100] ? "exp":""}" id="sege${i+100}" onclick="expand(${i+100})">&#xe395;</i>
 			<div class="segin" id="seg${i+100}"></div>
 		</div><br>`;
@@ -725,7 +724,7 @@ function requestJson(command, rinfo = true, verbose = true) {
 			if (!rinfo) {
 				pmt = json.info.fs.pmt;
 				if (pmt != pmtLS || pmt == 0) {
-				setTimeout(loadPresets,99);
+					setTimeout(loadPresets,99);
 				}
 				else populatePresets(true);
 				pmtLast = pmt;

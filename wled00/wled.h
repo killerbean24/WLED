@@ -41,6 +41,9 @@
 
 #define WLED_ENABLE_FS_EDITOR      // enable /edit page for editing FS content. Will also be disabled with OTA lock
 
+// toggle this to enable my custom debugs
+#define CUSTOM_DEBUG
+
 // to toggle usb serial debug (un)comment the following line
 //#define WLED_DEBUG
 
@@ -542,6 +545,19 @@ WLED_GLOBAL PinManagerClass pinManager _INIT(PinManagerClass());
 #endif
 
 // enable additional debug output
+#ifdef CUSTOM_DEBUG
+  #ifndef ESP8266
+  #include <rom/rtc.h>
+  #endif
+  #define CUSTOM_PRINT(x) Serial.print(x)
+  #define CUSTOM_PRINTLN(x) Serial.println(x)
+  #define CUSTOM_PRINTF(x...) Serial.printf(x)
+#else
+  #define CUSTOM_PRINT(x)
+  #define CUSTOM_PRINTLN(x)
+  #define CUSTOM_PRINTF(x)
+#endif
+
 #ifdef WLED_DEBUG
   #ifndef ESP8266
   #include <rom/rtc.h>

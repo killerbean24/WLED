@@ -258,8 +258,6 @@ bool deserializeState(JsonObject root)
 
   usermods.readFromJsonState(root);
 
-  //savePreset(1, true, nullptr, root);
-
   int ps = root[F("psave")] | -1;
   if (ps > 0) {
     savePreset(ps, true, nullptr, root);
