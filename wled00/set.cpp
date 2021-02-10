@@ -94,7 +94,7 @@ void handleSettingsSet(AsyncWebServerRequest *request, byte subPage)
     saveCurrPresetCycConf = request->hasArg(F("PC"));
     turnOnAtBoot = request->hasArg(F("BO"));
     t = request->arg(F("BP")).toInt();
-    if (t <= 250) bootPreset = t;
+    if (t <= 251) bootPreset = t;
     strip.gammaCorrectBri = request->hasArg(F("GB"));
     strip.gammaCorrectCol = request->hasArg(F("GC"));
 

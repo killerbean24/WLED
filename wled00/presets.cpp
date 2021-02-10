@@ -37,9 +37,10 @@ bool applyPreset(byte index)
 
 void savePreset(byte index, bool persist, const char* pname, JsonObject saveobj)
 {
-  if (index > 250) return;
-  CUSTOM_PRINTLN("savePreset. We are index ");
+  CUSTOM_PRINTLN("presets.cpp_savePreset. We are index ");
   CUSTOM_PRINTLN(index);
+
+  if (index == 0 || index > 251) return;
   bool docAlloc = (fileDoc != nullptr);
   JsonObject sObj = saveobj;
 

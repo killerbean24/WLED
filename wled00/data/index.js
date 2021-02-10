@@ -379,21 +379,20 @@ function populateQL()
 {
 	var cn = "";
 	if (pQL.length > 0) {
-	cn += `<p class="labels">Quick load</p>`;
-  
-  var it = 0;
-	for (var key of (pQL||[]))
-	{
-    cn += `<button class="xxs btn psts" id="p${key[0]}qlb" onclick="setPreset(${key[0]});">${key[1]}</button>`;
-    it++;
-    if (it > 4) {
-      it = 0;
-      cn += '<br>';
-    }
-  }
-  if (it != 0) cn+= '<br>';
+		cn += `<p class="labels">Quick load</p>`;
 	
-	cn += `<p class="labels">All presets</p>`;
+		var it = 0;
+		for (var key of (pQL||[])) {
+			cn += `<button class="xxs btn psts" id="p${key[0]}qlb" onclick="setPreset(${key[0]});">${key[1]}</button>`;
+			it++;
+			if (it > 4) {
+				it = 0;
+				cn += '<br>';
+			}
+		}
+		if (it != 0) cn += '<br>';
+		
+		cn += `<p class="labels">All presets</p>`;
 	}
 	d.getElementById('pql').innerHTML = cn;
 }
@@ -412,9 +411,10 @@ function populatePresets(fromls)
 	for (var key of (arr||[])) {
 		if (!isObject(key[1])) continue;
 		let i = parseInt(key[0]);
+		if (i == 251) continue;
 		var qll = key[1].ql;
-		if (qll) pQL.push([i, qll]);
-		is.push(i);
+		if (qll && i != 251) pQL.push([i, qll]);
+		if (i != 251) is.push(i);
 		
 		cn += `<div class="seg pres" id="p${i}o">`;
 		if (cfg.comp.pid) cn += `<div class="pid">${i}</div>`;
@@ -432,11 +432,11 @@ function populatePresets(fromls)
 			pJson["0"] = {};
 			localStorage.setItem("wledP", JSON.stringify(pJson));
 		}
-    pmtLS = pmt;
-    for (var a = 0; a < is.length; a++) {
-      let i = is[a];
-      if (expanded[i+100]) expand(i+100, true);
-    }
+		pmtLS = pmt;
+		for (var a = 0; a < is.length; a++) {
+			let i = is[a];
+			if (expanded[i+100]) expand(i+100, true);
+		}
 	} else { presetError(true); }
 	updatePA();
 	populateQL();

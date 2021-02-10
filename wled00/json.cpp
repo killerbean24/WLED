@@ -258,6 +258,14 @@ bool deserializeState(JsonObject root)
 
   usermods.readFromJsonState(root);
 
+  // This will always write the newly selected settings to default
+  JsonObject sObj = root;
+  DynamicJsonDocument lDoc(JSON_BUFFER_SIZE);
+  sObj = lDoc.to<JsonObject>();
+  sObj["n"] = "Custom";
+  serializeState(sObj, true);
+  writeObjectToFileUsingId("/presets.json", 251, &lDoc);
+
   int ps = root[F("psave")] | -1;
   if (ps > 0) {
     savePreset(ps, true, nullptr, root);
@@ -348,7 +356,8 @@ void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segme
     root[F("pss")] = savedPresets;
     root[F("pl")] = (presetCyclingEnabled) ? 0: -1;
 
-    serializeConfig();
+    // This is used when def in cfg.cpp is set to current
+    //serializeConfig();
     
     usermods.addToJsonState(root);
 
