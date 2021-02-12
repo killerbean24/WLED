@@ -383,7 +383,6 @@ void deEEP() {
   DynamicJsonDocument dDoc(JSON_BUFFER_SIZE *2);
   JsonObject sObj = dDoc.to<JsonObject>();
   sObj.createNestedObject("0");
-  sObj.createNestedObject("251");
 
   EEPROM.begin(EEPSIZE);
   if (EEPROM.read(233) == 233) { //valid EEPROM save

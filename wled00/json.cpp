@@ -6,6 +6,7 @@
 
 void deserializeSegment(JsonObject elem, byte it)
 {
+  CUSTOM_PRINTLN("enter deserializeSegment");
   byte id = elem[F("id")] | it;
   if (id < strip.getMaxSegments())
   {
@@ -151,10 +152,14 @@ void deserializeSegment(JsonObject elem, byte it)
     }
 
   }
+
+  CUSTOM_PRINTLN("exit deserializeSegment");
 }
 
 bool deserializeState(JsonObject root)
 {
+  CUSTOM_PRINTLN("");
+  CUSTOM_PRINTLN("enter deserializeState");
   //Reading State
   strip.applyToAllSelected = false;
   bool stateResponse = root[F("v")] | false;
@@ -258,14 +263,6 @@ bool deserializeState(JsonObject root)
 
   usermods.readFromJsonState(root);
 
-  // This will always write the newly selected settings to default
-  JsonObject sObj = root;
-  DynamicJsonDocument lDoc(JSON_BUFFER_SIZE);
-  sObj = lDoc.to<JsonObject>();
-  sObj["n"] = "Custom";
-  serializeState(sObj, true);
-  writeObjectToFileUsingId("/presets.json", 251, &lDoc);
-
   int ps = root[F("psave")] | -1;
   if (ps > 0) {
     savePreset(ps, true, nullptr, root);
@@ -293,11 +290,15 @@ bool deserializeState(JsonObject root)
 
   colorUpdated(noNotification ? NOTIFIER_CALL_MODE_NO_NOTIFY : NOTIFIER_CALL_MODE_DIRECT_CHANGE);
 
+  CUSTOM_PRINTLN("exit deserializeState");
+
   return stateResponse;
 }
 
 void serializeSegment(JsonObject& root, WS2812FX::Segment& seg, byte id, bool forPreset, bool segmentBounds)
 {
+  CUSTOM_PRINTLN("enter serializeSegment");
+
 	root[F("id")] = id;
   if (segmentBounds) {
     root[F("start")] = seg.start;
@@ -338,10 +339,13 @@ void serializeSegment(JsonObject& root, WS2812FX::Segment& seg, byte id, bool fo
 	root[F("sel")] = seg.isSelected();
 	root[F("rev")] = seg.getOption(SEG_OPTION_REVERSED);
   root[F("mi")]  = seg.getOption(SEG_OPTION_MIRROR);
+
+  CUSTOM_PRINTLN("exit serializeSegment");
 }
 
 void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segmentBounds)
 { 
+  CUSTOM_PRINTLN("enter serializeState");
   // Writing State
   if (includeBri) {
     root["on"] = (bri > 0);
@@ -356,8 +360,7 @@ void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segme
     root[F("pss")] = savedPresets;
     root[F("pl")] = (presetCyclingEnabled) ? 0: -1;
 
-    // This is used when def in cfg.cpp is set to current
-    //serializeConfig();
+    serializeConfig();
     
     usermods.addToJsonState(root);
 
@@ -401,6 +404,8 @@ void serializeState(JsonObject root, bool forPreset, bool includeBri, bool segme
       seg0["stop"] = 0;
     }
   }
+
+  CUSTOM_PRINTLN("exit serializeState");
 }
 
 //by https://github.com/tzapu/WiFiManager/blob/master/WiFiManager.cpp

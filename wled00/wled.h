@@ -42,7 +42,7 @@
 #define WLED_ENABLE_FS_EDITOR      // enable /edit page for editing FS content. Will also be disabled with OTA lock
 
 // toggle this to enable my custom debugs (use CUSTOM_PRINTLN)
-#define CUSTOM_DEBUG
+//#define CUSTOM_DEBUG
 
 // to toggle usb serial debug (un)comment the following line
 //#define WLED_DEBUG
@@ -215,7 +215,7 @@ WLED_GLOBAL int ethernetType _INIT(WLED_ETH_ESP32_POE);            // ethernet b
 WLED_GLOBAL uint16_t ledCount _INIT(502);          // overcurrent prevented by ABL
 WLED_GLOBAL bool useRGBW      _INIT(false);       // SK6812 strips can contain an extra White channel
 WLED_GLOBAL bool turnOnAtBoot _INIT(true);        // turn on LEDs at power-up
-WLED_GLOBAL byte bootPreset   _INIT(251);           // save preset to load after power-up
+WLED_GLOBAL byte bootPreset   _INIT(0);           // save preset to load after power-up
 
 WLED_GLOBAL byte col[]    _INIT_N(({ 255, 160, 0, 0 }));  // current RGB(W) primary color. col[] should be updated if you want to change the color.
 WLED_GLOBAL byte colSec[] _INIT_N(({ 0, 0, 0, 0 }));      // current RGB(W) secondary color

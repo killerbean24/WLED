@@ -411,10 +411,9 @@ function populatePresets(fromls)
 	for (var key of (arr||[])) {
 		if (!isObject(key[1])) continue;
 		let i = parseInt(key[0]);
-		if (i == 251) continue;
 		var qll = key[1].ql;
-		if (qll && i != 251) pQL.push([i, qll]);
-		if (i != 251) is.push(i);
+		if (qll) pQL.push([i, qll]);
+		is.push(i);
 		
 		cn += `<div class="seg pres" id="p${i}o">`;
 		if (cfg.comp.pid) cn += `<div class="pid">${i}</div>`;

@@ -265,6 +265,9 @@ bool writeObjectToFileUsingId(const char* file, uint16_t id, JsonDocument* conte
 
 bool writeObjectToFile(const char* file, const char* key, JsonDocument* content)
 {
+  CUSTOM_PRINTLN("file.cpp_writeObjectToFile. We are key ");
+  CUSTOM_PRINTLN(key);
+
   uint32_t s = 0; //timing
   #ifdef WLED_DEBUG_FS
     DEBUGFS_PRINTF("Write to %s with key %s >>>\n", file, (key==nullptr)?"nullptr":key);

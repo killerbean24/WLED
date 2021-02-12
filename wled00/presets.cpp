@@ -46,6 +46,7 @@ void savePreset(byte index, bool persist, const char* pname, JsonObject saveobj)
 
   if (!docAlloc) {
     DEBUGFS_PRINTLN(F("Allocating saving buffer"));
+    CUSTOM_PRINTLN(F("Allocating saving buffer"));
     DynamicJsonDocument lDoc(JSON_BUFFER_SIZE);
     sObj = lDoc.to<JsonObject>();
     if (pname) sObj["n"] = pname;
@@ -53,9 +54,12 @@ void savePreset(byte index, bool persist, const char* pname, JsonObject saveobj)
     serializeState(sObj, true);
     currentPreset = index;
 
+    CUSTOM_PRINTLN("presets.cpp_savePreset -> writeObjectToFileUsingId");
+
     writeObjectToFileUsingId("/presets.json", index, &lDoc);
   } else { //from JSON API
     DEBUGFS_PRINTLN(F("Reuse recv buffer"));
+    CUSTOM_PRINTLN(F("Reuse recv buffer"));
     sObj.remove(F("psave"));
     sObj.remove(F("v"));
 
@@ -69,6 +73,8 @@ void savePreset(byte index, bool persist, const char* pname, JsonObject saveobj)
     sObj.remove("sb");
     sObj.remove(F("error"));
     sObj.remove(F("time"));
+
+    CUSTOM_PRINTLN("presets.cpp_savePreset -> writeObjectToFileUsingId");
 
     writeObjectToFileUsingId("/presets.json", index, fileDoc);
   }
